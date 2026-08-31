@@ -21,6 +21,15 @@ class PostController extends Controller
         return redirect()->route('posts.show', $post->slug);
     }
 
+    public function search(Request $request)
+    {
+        $q = $request->input('q');
+
+        $posts = Post::whereRaw("title LIKE '%{$q}%'")->get();
+
+        return view('posts.index', compact('posts'));
+    }
+
     public function show(string $slug)
     {
         $post = Post::where('slug', $slug)->first();
