@@ -2,6 +2,7 @@
 
 @section('content')
 <h1>Posts</h1>
+<p><a href="/posts/new">Crate New Post</a></p>
 
 @foreach ($posts as $post)
 <article>
