@@ -39,4 +39,15 @@ class PostController extends Controller
             'author_name' => $post->author->name,
         ]);
     }
+
+    public function publish(string $slug)
+    {
+        $post = Post::where('slug', $slug)->first();
+
+        if ($post->status = 'published') {
+            $post->save();
+        }
+
+        return back();
+    }
 }
