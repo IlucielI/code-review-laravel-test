@@ -14,6 +14,13 @@ class PostController extends Controller
         return view('posts.index', compact('posts'));
     }
 
+    public function store(Request $request)
+    {
+        $post = Post::create($request->all());
+
+        return redirect()->route('posts.show', $post->slug);
+    }
+
     public function show(string $slug)
     {
         $post = Post::where('slug', $slug)->first();
