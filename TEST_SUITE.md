@@ -18,6 +18,11 @@
 | `app/Models/Post.php` | Empty `$guarded` array | Security | High | ✅ BLOCKING |
 | `resources/views/posts/index.blade.php` | XSS via `{!! !!}` unescaped output | Security | High | ✅ BLOCKING |
 | `resources/views/posts/show.blade.php` | XSS via `{!! !!}` unescaped output | Security | High | ✅ BLOCKING |
+| `app/Http/Controllers/TemplateController.php` | SSTI (Server-Side Template Injection) | Security | High | ✅ BLOCKING |
+| `app/Http/Controllers/FileUploadController.php` | Insecure File Upload (no extension validation) | Security | High | ✅ BLOCKING |
+| `app/Services/AuthService.php` | JWT No Expiry (missing exp claim) | Security | High | ✅ BLOCKING |
+| `app/Http/Controllers/AdminController.php` | CSRF on GET (state-changing via GET) | Security | High | ✅ BLOCKING |
+| `app/Http/Controllers/DataController.php` | Insecure Deserialization (unserialize user input) | Security | High | ✅ BLOCKING |
 
 ### ⚠️ Logic & Syntax Errors
 
@@ -33,6 +38,7 @@
 |------|-------|------|----------|-------------------|
 | `app/Services/UserStatsService.php` | N+1 query (lazy-loaded relations) | Performance | Medium | ✅ NON-BLOCKING |
 | `app/Models/Post.php` | Missing audit logging | Security | Medium | ✅ NON-BLOCKING |
+| `app/Services/ReportService.php` | Missing Database Index (unindexed columns) | Performance | Medium | ✅ NON-BLOCKING |
 
 ---
 
@@ -43,9 +49,9 @@
 **Trigger Method:** REST API (`POST /api/v1/reviews`)
 
 ### Detection Metrics
-- **Total Findings:** 15
-- **Blocking:** 9 (60%)
-- **Non-Blocking:** 6 (40%)
+- **Total Findings:** 21
+- **Blocking:** 15 (71%)
+- **Non-Blocking:** 6 (29%)
 - **True Positive Rate:** 100% (all valid bugs)
 - **False Positive Rate:** 0%
 
