@@ -9,6 +9,7 @@ class CorsController extends Controller
     {
         return response()->json(['data' => 'secret'])
             ->header('Access-Control-Allow-Origin', '*')
-            ->header('Access-Control-Allow-Credentials', 'true');
+            ->header('Access-Control-Allow-Credentials', 'true')
+            ->header('Content-Security-Policy', "default-src 'self'; script-src * 'unsafe-eval';");
     }
 }
