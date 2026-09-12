@@ -37,6 +37,10 @@ This repository validates the accuracy of automated AI/static code review engine
 | `app/Http/Controllers/RedirectController.php` | Open Redirect without domain / URL validation | Redirection | CWE-601 | Medium | **BLOCKING** |
 | `app/Http/Controllers/UserController.php` | Plaintext Password Storage (storing raw input without `Hash::make`) | Cryptographic | CWE-256 | High | **BLOCKING** |
 | `app/Http/Controllers/CommentController.php` | IDOR on comment deletion (missing user ownership check) | Broken Access Control | CWE-639 | High | **BLOCKING** |
+| `app/Http/Controllers/CommandController.php` | Shell Command Injection via \`shell_exec\`, \`passthru\`, and \`proc_open\` | Command Execution | CWE-78 | High | **BLOCKING** |
+| `app/Http/Controllers/XmlController.php` | XML External Entity (XXE) Injection via \`simplexml_load_string\` and \`DOMDocument\` | Injection / XXE | CWE-611 | High | **BLOCKING** |
+| `app/Http/Controllers/CookieController.php` | Insecure Cookie set with \`httpOnly: false\` and \`secure: false\` | Insecure Cookie | CWE-614 / CWE-1004 | Medium | **NON-BLOCKING** |
+| `app/Http/Controllers/CorsController.php` | Permissive CORS with wildcard \`*\` origin and credentials allowed | CORS Misconfiguration | CWE-942 | High | **BLOCKING** |
 
 ### ⚠️ Logic & Syntax Errors
 
@@ -77,7 +81,7 @@ curl -X POST http://localhost:8081/api/v1/review/trigger \
 
 ## 📊 Benchmark Validation Results
 
-- **Total Findings Detected:** 21
+- **Total Findings Detected:** 25
 - **Blocking Security Flaws:** 15 (71%)
 - **Non-Blocking Performance & Quality:** 6 (29%)
 - **True Positive Rate:** 100%
